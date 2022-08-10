@@ -179,6 +179,22 @@ type JobEventPayload struct {
 	Runner             Runner      `json:"runner"`
 }
 
+// ReleaseEventPayload contains the information for GitLab's release event
+type ReleaseEventPayload struct {
+	ID          int64      `json:"id"`
+	CreatedAt   customTime `json:"created_at"`
+	Description string     `json:"description"`
+	Name        string     `json:"name"`
+	ReleasedAt  customTime `json:"released_at"`
+	Tag         string     `json:"tag"`
+	ObjectKind  string     `json:"object_kind"`
+	Project     Project    `json:"project"`
+	URL         string     `json:"url"`
+	Action      string     `json:"action"`
+	Assets      Assets     `json:"assets"`
+	Commit      Commit     `json:"commit"`
+}
+
 // SystemHookPayload contains the ObjectKind to match with real hook events
 type SystemHookPayload struct {
 	ObjectKind string `json:"object_kind"`
@@ -546,4 +562,26 @@ type Label struct {
 	Description string     `json:"description"`
 	Type        string     `json:"type"`
 	GroupID     int64      `json:"group_id"`
+}
+
+// Assets contains all info about Gitlab assets
+type Assets struct {
+	Count   int64     `json:"count"`
+	Links   []Links   `json:"links"`
+	Sources []Sources `json:"sources"`
+}
+
+// Links contains all info about Gitlab asset link
+type Links struct {
+	ID       int64  `json:"id"`
+	External bool   `json:"external"`
+	LinkType string `json:"link_type"`
+	Name     string `json:"name"`
+	URL      string `json:"url"`
+}
+
+// Sources contains all info about Gitlab asset source
+type Sources struct {
+	Format string `json:"format"`
+	URL    string `json:"url"`
 }

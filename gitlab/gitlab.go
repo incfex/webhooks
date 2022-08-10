@@ -33,6 +33,7 @@ const (
 	PipelineEvents           Event = "Pipeline Hook"
 	BuildEvents              Event = "Build Hook"
 	JobEvents                Event = "Job Hook"
+	ReleaseEvents            Event = "Release Hook"
 	SystemHookEvents         Event = "System Hook"
 
 	objectPush         string = "push"
@@ -183,6 +184,11 @@ func eventParsing(gitLabEvent Event, events []Event, payload []byte) (interface{
 			return eventParsing(BuildEvents, events, payload)
 		}
 		return pl, nil
+
+	case ReleaseEvents:
+		var pl ReleaseEventPayload
+		err := json.Unmarshal([]byte(payload), &pl)
+		return pl, err
 
 	case SystemHookEvents:
 		var pl SystemHookPayload
